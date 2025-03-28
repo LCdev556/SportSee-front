@@ -1,0 +1,31 @@
+.key-data-card {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 15px;
+  width: 200px;
+  height: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  zoom: 1.1;
+}
+.key-data-card__icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+.key-data-card__info {
+  display: flex;
+  flex-direction: column;
+}
+.key-data-card__value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #282d30;
+  margin-bottom: 0px;
+}
+.key-data-card__label {
+  font-size: 14px;
+  color: #74798c;
+  margin-top: 0pc;
+}/*# sourceMappingURL=KeyDataCard.css.map */

@@ -1,0 +1,18 @@
+.HelloBanner {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+.HelloBanner h1 {
+  font-size: 48px;
+  font-weight: 500;
+  color: black;
+}
+.HelloBanner h1 span {
+  color: #FF0000 !important;
+}
+.HelloBanner p {
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+}/*# sourceMappingURL=HelloBanner.css.map */

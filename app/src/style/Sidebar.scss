@@ -1,0 +1,46 @@
+@import "./color";
+
+.sidebar {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 100%;
+    width: 80px; 
+    position: relative; 
+  }
+  
+  .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; 
+    margin-top: 14rem;
+  }
+  
+  .sidebar__icon {
+    background: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
+  .sidebar__copyright {
+    color: white;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    position: absolute;
+    bottom: 2rem;
+  }

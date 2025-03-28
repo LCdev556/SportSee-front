@@ -1,0 +1,44 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.layout__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+  padding: 1rem 2rem;
+}
+
+.layout__headerlogo {
+  height: 50px;
+}
+
+.layout__header nav ul {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.layout__header nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+}
+
+.layout__body {
+  display: flex;
+  flex: 1;
+}
+
+.layout__content {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+.hearderNavLinks {
+  width: 100%;
+}/*# sourceMappingURL=layout.css.map */

@@ -1,0 +1,29 @@
+@import "./color";
+
+.average-sessions-chart {
+    background: linear-gradient(to right, #ff0000, #ff3b3b);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    position: relative;
+    width: 100%;
+  }
+  
+  .chart-title {
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.8;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+  }
+  
+  .custom-tooltip {
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+  
+  
