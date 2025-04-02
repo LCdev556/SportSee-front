@@ -14,7 +14,7 @@ SportSee est une application web permettant de suivre et analyser les données s
 
 - Node.js, Yarn et npm installés.  
 
-### Lancement 
+### Lancement front
 
 - cd SportSee-font
 - cd app
