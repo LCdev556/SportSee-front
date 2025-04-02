@@ -18,7 +18,7 @@
     left: 15px;
     font-size: 14px;
     font-weight: bold;
-    color: #282d30;
+    color: $color-bar-primary;
   }
   
   .score-text {
@@ -34,7 +34,7 @@
   .score-percentage {
     font-size: 24px;
     font-weight: bold;
-    color: #282d30;
+    color: $color-bar-primary;
   }
   
   .score-subtext {
