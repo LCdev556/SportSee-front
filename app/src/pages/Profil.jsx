@@ -22,71 +22,90 @@ function Profil() {
   const [userActivity, setUserActivity] = useState(null);
   const [userSessions, setUserSessions] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
- 
 
+  
+  const [errorMainData, setErrorMainData] = useState(false);
   const [errorActivity, setErrorActivity] = useState(false);
   const [errorSessions, setErrorSessions] = useState(false);
   const [errorPerformance, setErrorPerformance] = useState(false);
   const [errorScore, setErrorScore] = useState(false);
-  const [error, setError] = useState(null);
-  
+
   const [loading, setLoading] = useState(true);
-
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   Promise.all([
-  //     fetchUserMainData(userId),
-  //     fetchUserActivity(userId),
-  //     fetchUserAverageSessions(userId),
-  //     fetchUserPerformance(userId),
-  //   ])
-  //     .then(([data, activity, sessions, performance]) => {
-  //       setUserMainData(data);
-  //       setUserActivity(activity.sessions);
-  //       setUserSessions(sessions.sessions);
-  //       setUserPerformance(performance);
-  //     })
-  //     .catch((err) => setError(err.message))
-  //     .finally(() => setLoading(false));
-  // }, [userId]);
 
   useEffect(() => {
     setLoading(true);
-  
-    Promise.all([
-      fetchUserMainData(userId).then(setUserMainData).catch(() => setErrorScore(true)),
-      fetchUserActivity(userId).then(data => setUserActivity(data.sessions)).catch(() => setErrorActivity(true)),
-      fetchUserAverageSessions(userId).then(data => setUserSessions(data.sessions)).catch(() => setErrorSessions(true)),
-      fetchUserPerformance(userId).then(setUserPerformance).catch(() => setErrorPerformance(true)),
-    ])
-    .catch((error) => setError(error))
-    .finally(() => setLoading(false));
+
+    
+    fetchUserMainData(userId)
+      .then((data) => {
+        if (!data || !data.userInfos) {
+          throw new Error("Profil non trouvé");
+        }
+        setUserMainData(data);
+
+        
+        if (data.todayScore === undefined) {
+          setErrorScore(true);
+        }
+      })
+      .catch(() => setErrorMainData(true))
+      .finally(() => setLoading(false));
+
+    
+    fetchUserActivity(userId)
+      .then((data) => setUserActivity(data.sessions))
+      .catch(() => setErrorActivity(true));
+
+    fetchUserAverageSessions(userId)
+      .then((data) => setUserSessions(data.sessions))
+      .catch(() => setErrorSessions(true));
+
+    fetchUserPerformance(userId)
+      .then(setUserPerformance)
+      .catch(() => setErrorPerformance(true));
   }, [userId]);
 
-  if (error) return <p>Erreur : {error}</p>;
+ 
   if (loading) return <p>Chargement...</p>;
-  
+  if (errorMainData) return <p style={{ color: "red", fontSize: "20px", textAlign: "center" }}>❌ Erreur 404 : Profil non trouvé</p>;
 
   return (
     <div className="profil-page">
-      
       <div className="profil-container">
         <HelloBanner name={userMainData.userInfos.firstName} />
         <section className="charts-container">
           <div className="main-charts">
-            <ActivityChart activityData={userActivity} error={errorActivity} />
+            {errorActivity ? (
+              <p className="chart-error">⚠ Impossible de charger les données d'activité.</p>
+            ) : (
+              <ActivityChart activityData={userActivity} />
+            )}
+
             <div className="sub-charts">
-              <AverageSessionsChart sessions={userSessions} error={errorSessions}/>
-              <PerformanceChart performance={userPerformance} error={errorPerformance} />
-              <ScoreChart score={userMainData.todayScore} error={errorScore}/>
+              {errorSessions ? (
+                <p className="chart-error">⚠ Impossible de charger les données de sessions.</p>
+              ) : (
+                <AverageSessionsChart sessions={userSessions} />
+              )}
+
+              {errorPerformance ? (
+                <p className="chart-error">⚠ Impossible de charger les performances.</p>
+              ) : (
+                <PerformanceChart performance={userPerformance} />
+              )}
+
+              {errorScore ? (
+                <p className="chart-error">⚠ Impossible de charger le score.</p>
+              ) : (
+                <ScoreChart score={userMainData.todayScore} />
+              )}
             </div>
           </div>
+
           <KeyDataSection keyData={userMainData.keyData} />
         </section>
       </div>
     </div>
-    
   );
 }
 

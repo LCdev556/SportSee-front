@@ -1,5 +1,3 @@
-
-
 function Community() { 
     return (
       <>

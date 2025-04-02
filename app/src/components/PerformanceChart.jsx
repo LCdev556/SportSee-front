@@ -1,11 +1,22 @@
 import PropTypes from "prop-types";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from "recharts";
-import "../style/PerformanceChart.scss"; // 🔥 Ajout du CSS
+import "../style/PerformanceChart.scss"; 
 
-function PerformanceChart({ performance, error }) {
-  if (error) return <p className="error-message">❌ Impossible de charger les données.</p>;
+/**
+ * Composant pour afficher un graphique radar représentant les performances d'un utilisateur dans divers domaines.
+ *
+ * @param {Object} props - Les propriétés passées au composant.
+ * @param {Object} props.performance - Les données de performance à afficher dans le graphique.
+ * @param {Object} props.performance.kind - Un objet mappant les indices aux noms des différentes catégories de performance.
+ * @param {Array} props.performance.data - Un tableau contenant les données des performances (avec `kind` et `value`).
+ * @param {boolean} props.error - Indicateur d'erreur pour afficher un message d'erreur.
+ * @returns {JSX.Element} - Un graphique radar avec les performances de l'utilisateur.
+ */
+function PerformanceChart({ performance}) {
+  
   if (!performance) return <p>Aucune donnée disponible</p>;
 
+  
   const formattedData = performance.data.map((item) => ({
     kind: performance.kind[item.kind], 
     value: item.value,
@@ -24,6 +35,7 @@ function PerformanceChart({ performance, error }) {
   );
 }
 
+
 PerformanceChart.propTypes = {
   performance: PropTypes.shape({
     data: PropTypes.arrayOf(
@@ -34,6 +46,7 @@ PerformanceChart.propTypes = {
     ).isRequired,
     kind: PropTypes.object.isRequired, 
   }),
+  error: PropTypes.bool,
 };
 
 export default PerformanceChart;

@@ -2,8 +2,16 @@ import PropTypes from "prop-types";
 import { RadialBarChart, RadialBar, ResponsiveContainer } from "recharts";
 import "../style/ScoreChart.scss"; 
 
-function ScoreChart({ score, error }) {
-  if (error) return <p className="error-message">❌ Impossible de charger les données.</p>;
+/**
+ * Composant pour afficher un graphique radial représentant le score d'un utilisateur.
+ *
+ * @param {Object} props - Les propriétés passées au composant.
+ * @param {number} props.score - Le score de l'utilisateur, un nombre entre 0 et 1 représentant le pourcentage du score.
+ * @param {boolean} props.error - Indicateur d'erreur pour afficher un message d'erreur.
+ * @returns {JSX.Element} - Un graphique radial avec le score de l'utilisateur et un texte indiquant le pourcentage de l'objectif atteint.
+ */
+function ScoreChart({ score}) {
+  
   const data = [{ name: "Score", value: score * 100, fill: "#FF0000" }];
 
   return (
@@ -31,8 +39,10 @@ function ScoreChart({ score, error }) {
   );
 }
 
+
 ScoreChart.propTypes = {
-  score: PropTypes.number.isRequired, 
+  score: PropTypes.number.isRequired,  
+  error: PropTypes.bool,  
 };
 
 export default ScoreChart;

@@ -1,12 +1,11 @@
 .key-data-card {
   display: flex;
   align-items: center;
-  background-color: #f8f8f8;
-  border-radius: 10px;
+  background-color: #FBFBFB;
+  border-radius: 5px;
   padding: 15px;
   width: 200px;
   height: 80px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   zoom: 1.1;
 }
 .key-data-card__icon {

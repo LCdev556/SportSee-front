@@ -17,51 +17,12 @@ const fetchData = async (endpoint) => {
     return data.data;
   } catch (error) {
     console.error("❌ Erreur lors de la récupération des données :", error);
-    //throw error;
-    return null; // Retourne null en cas d'erreur réseau
+    
+    return null; 
   }
 };
 
-// /**
-//  * Normalise les données utilisateur (gestion de todayScore/score)
-//  */
-// const normalizeUserData = (user) => ({
-//   id: user.id,
-//   userInfos: user.userInfos,
-//   todayScore: user.todayScore ?? user.score, // Standardisation du score
-//   keyData: user.keyData,
-// });
 
-// /**
-//  * Normalise les données d'activité (ne modifie plus la date)
-//  */
-// const normalizeUserActivity = (activity) => ({
-//   userId: activity.userId,
-//   sessions: activity.sessions.map((session) => ({
-//     ...session, // ❌ Suppression du formatage des dates
-//   })),
-// });
-
-// /**
-//  * Normalise les sessions moyennes
-//  */
-// const normalizeUserAverageSessions = (sessions) => ({
-//   userId: sessions.userId,
-//   sessions: sessions.sessions.map((session) => ({
-//     ...session, // Garde les jours sous forme de nombres (1 à 7)
-//   })),
-// });
-
-// /**
-//  * Normalise les performances
-//  */
-// const normalizeUserPerformance = (performance) => ({
-//   userId: performance.userId,
-//   kind: performance.kind,
-//   data: performance.data,
-// });
-
-// Fonctions spécifiques pour récupérer chaque type de donnée avec normalisation
 export const fetchUserMainData = async (userId) => {
   const data = await fetchData(`/user/${userId}`);
   return normalizeUserMainData(data);

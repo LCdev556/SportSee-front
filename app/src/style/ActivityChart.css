@@ -1,8 +1,7 @@
 .activity-chart {
-  background: #fbfbfb;
+  background: #FBFBFB;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   zoom: 0.8;
 }
 
@@ -13,7 +12,7 @@
 }
 
 .custom-tooltip {
-  background-color: red !important;
+  background-color: #FF0101 !important;
   color: white !important;
   padding: 5px 10px;
   border-radius: 5px;

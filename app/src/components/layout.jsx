@@ -3,67 +3,69 @@ import "../style/layout.scss";
 import Sidebar from "./Sidebar";
 
 /**
- * Composant de mise en page pour rendre la structure de la page
- * @param {object} props - Les propriétés passées au composant
- * @param {React.ReactNode} props.children - Le contenu à afficher à l'intérieur de la mise en page
- * @returns {JSX.Element} Le composant de mise en page rendu
+ * Composant de mise en page pour structurer la page avec un en-tête, un menu de navigation et un corps principal.
+ *
+ * @param {Object} props - Les propriétés passées au composant.
+ * @param {React.ReactNode} props.children - Le contenu à afficher dans la partie principale de la mise en page.
+ * @returns {JSX.Element} - Le composant de mise en page avec l'en-tête, le menu et le contenu principal.
  */
 function Layout({ children }) {
   return (
-    <div className="layout"> {/* Conteneur principal pour toute la mise en page */}
+    <div className="layout"> 
       
-      <header className="layout__header"> {/* En-tête contenant le logo et la navigation */}
-        <img className="layout__headerlogo" src="../src/assets/logo.svg"/> {/* Logo du header */}
+      <header className="layout__header"> 
+        <img className="layout__headerlogo" src="../src/assets/logo.svg" alt="Logo" /> 
         
-        <nav className="hearderNavLinks"> {/* Menu de navigation */}
-          <ul> {/* Liste des liens de navigation */}
+        <nav className="hearderNavLinks"> 
+          <ul> 
             <li>
-                <NavLink
+              <NavLink
                 to="/"
                 className={({ isActive }) => (isActive ? "active-link" : "")}
-                >
+              >
                 Accueil
-                </NavLink>
+              </NavLink>
             </li>
             
             <li>
-                <NavLink
+              <NavLink
                 to="/profil"
                 className={({ isActive }) => (isActive ? "active-link" : "")}
-                >
+              >
                 Profil
-                </NavLink>
+              </NavLink>
             </li>
 
             <li>
-                <NavLink
+              <NavLink
                 to="/setting"
                 className={({ isActive }) => (isActive ? "active-link" : "")}
-                >
+              >
                 Réglage
-                </NavLink>
+              </NavLink>
             </li>
 
             <li>
-                <NavLink
+              <NavLink
                 to="/community"
                 className={({ isActive }) => (isActive ? "active-link" : "")}
-                >
+              >
                 Communauté
-                </NavLink>
+              </NavLink>
             </li>
           </ul>
         </nav>
       </header>
+      
       <div className="layout__body"> 
         <Sidebar /> 
         
         <main className="layout__content"> 
-          {children}
+          {children} 
         </main>
       </div>
     </div>
   );
 }
 
-export default Layout; 
+export default Layout;

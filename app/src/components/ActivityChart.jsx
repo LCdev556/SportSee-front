@@ -2,8 +2,14 @@ import PropTypes from "prop-types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import "../style/ActivityChart.scss";
 
-
-
+/**
+ * Composant personnalisé pour afficher des informations dans le tooltip.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {boolean} props.active - Indique si le tooltip est actif ou non.
+ * @param {Array} props.payload - Les données à afficher dans le tooltip.
+ * @returns {JSX.Element|null} - Retourne un JSX contenant les informations à afficher dans le tooltip ou `null` si aucune donnée à afficher.
+ */
 function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length > 0) {
     const kilogramData = payload.find((entry) => entry.dataKey === "kilogram");
@@ -18,6 +24,17 @@ function CustomTooltip({ active, payload }) {
   return null;
 }
 
+// Définition des types des propriétés du composant `CustomTooltip`
+CustomTooltip.propTypes = {
+  active: PropTypes.bool.isRequired,
+  payload: PropTypes.array.isRequired,
+};
+
+/**
+ * Composant personnalisé pour afficher la légende du graphique.
+ * 
+ * @returns {JSX.Element} - Un élément JSX représentant la légende du graphique.
+ */
 function CustomLegend() {
   return (
     <div className="custom-legend">
@@ -31,28 +48,29 @@ function CustomLegend() {
   );
 }
 
-CustomTooltip.propTypes = {
-  active: PropTypes.bool,
-  payload: PropTypes.array,
-};
-
-function ActivityChart({ activityData, error }) {
-  if (error) return <p className="error-message">❌ Impossible de charger les données.</p>;
+/**
+ * Composant affichant un graphique en barres représentant l'activité quotidienne.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.activityData - Les données d'activité à afficher dans le graphique.
+ * @param {boolean} props.error - Indique si une erreur est survenue lors du chargement des données.
+ * @returns {JSX.Element} - Un élément JSX contenant le graphique ou un message d'erreur si les données sont introuvables.
+ */
+function ActivityChart({ activityData}) {
+  
   if (!activityData) return <p>Chargement...</p>;
 
-  
   const formattedData = activityData.map((session, index) => ({
     ...session,
     day: index + 1, 
   }));
 
- 
   const minValue = Math.min(...activityData.map((d) => d.kilogram));
-const maxValue = Math.max(...activityData.map((d) => d.kilogram));
-const avgValue = Math.round(activityData.reduce((sum, d) => sum + d.kilogram, 0) / activityData.length);
+  const maxValue = Math.max(...activityData.map((d) => d.kilogram));
+  const avgValue = Math.round(activityData.reduce((sum, d) => sum + d.kilogram, 0) / activityData.length);
 
-const lowerBound = minValue - 2; 
-const upperBound = maxValue + 2; 
+  const lowerBound = minValue - 2; 
+  const upperBound = maxValue + 2; 
 
   return (
     <div className="activity-chart">
@@ -83,9 +101,10 @@ const upperBound = maxValue + 2;
   );
 }
 
+// Définition des types des propriétés du composant `ActivityChart`
 ActivityChart.propTypes = {
-  activityData: PropTypes.array,
+  activityData: PropTypes.array.isRequired,
+  error: PropTypes.bool,
 };
 
 export default ActivityChart;
-

@@ -12,6 +12,14 @@ import "../style/AverageSessionsChart.scss";
 
 const daysMapping = ["L", "M", "M", "J", "V", "S", "D"];
 
+/**
+ * Composant personnalisé pour afficher des informations dans le tooltip.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {boolean} props.active - Indique si le tooltip est actif ou non.
+ * @param {Array} props.payload - Les données à afficher dans le tooltip.
+ * @returns {JSX.Element|null} - Retourne un JSX contenant les informations à afficher dans le tooltip ou `null` si aucune donnée à afficher.
+ */
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
@@ -23,7 +31,13 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-
+/**
+ * Composant personnalisé pour afficher un curseur (rectangle) dans le graphique.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.points - Les points à utiliser pour positionner le rectangle.
+ * @returns {JSX.Element} - Un élément JSX représentant le curseur (rectangle) sur le graphique.
+ */
 const CustomCursor = ({ points }) => {
   return (
     <Rectangle
@@ -35,8 +49,16 @@ const CustomCursor = ({ points }) => {
   );
 };
 
-function AverageSessionsChart({ sessions, error }) {
-  if (error) return <p className="error-message">❌ Impossible de charger les données.</p>;
+/**
+ * Composant affichant un graphique en ligne représentant la durée moyenne des sessions.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.sessions - Les données des sessions à afficher dans le graphique.
+ * @param {boolean} props.error - Indique si une erreur est survenue lors du chargement des données.
+ * @returns {JSX.Element} - Un élément JSX contenant le graphique ou un message d'erreur si les données sont introuvables.
+ */
+function AverageSessionsChart({ sessions}) {
+  
   return (
     <div className="average-sessions-chart">
       <h3 className="chart-title">Durée moyenne des sessions</h3>
@@ -65,6 +87,7 @@ function AverageSessionsChart({ sessions, error }) {
   );
 }
 
+// Définition des types des propriétés du composant `AverageSessionsChart`
 AverageSessionsChart.propTypes = {
   sessions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -72,6 +95,7 @@ AverageSessionsChart.propTypes = {
       sessionLength: PropTypes.number.isRequired,
     })
   ).isRequired,
+  error: PropTypes.bool,
 };
 
 export default AverageSessionsChart;
