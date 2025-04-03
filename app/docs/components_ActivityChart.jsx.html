@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/ActivityChart.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/ActivityChart.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import PropTypes from "prop-types";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import "../style/ActivityChart.scss";
+
+/**
+ * Composant personnalisé pour afficher des informations dans le tooltip.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {boolean} props.active - Indique si le tooltip est actif ou non.
+ * @param {Array} props.payload - Les données à afficher dans le tooltip.
+ * @returns {JSX.Element|null} - Retourne un JSX contenant les informations à afficher dans le tooltip ou `null` si aucune donnée à afficher.
+ */
+function CustomTooltip({ active, payload }) {
+  if (active &amp;&amp; payload &amp;&amp; payload.length > 0) {
+    const kilogramData = payload.find((entry) => entry.dataKey === "kilogram");
+    const caloriesData = payload.find((entry) => entry.dataKey === "calories");
+    return (
+      &lt;div className="custom-tooltip">
+        {kilogramData &amp;&amp; &lt;p>{`${kilogramData.value}kg`}&lt;/p>}
+        {caloriesData &amp;&amp; &lt;p>{`${caloriesData.value}kCal`}&lt;/p>}
+      &lt;/div>
+    );
+  }
+  return null;
+}
+
+// Définition des types des propriétés du composant `CustomTooltip`
+CustomTooltip.propTypes = {
+  active: PropTypes.bool.isRequired,
+  payload: PropTypes.array.isRequired,
+};
+
+/**
+ * Composant personnalisé pour afficher la légende du graphique.
+ * 
+ * @returns {JSX.Element} - Un élément JSX représentant la légende du graphique.
+ */
+function CustomLegend() {
+  return (
+    &lt;div className="custom-legend">
+      &lt;span className="legend-item">
+        &lt;span className="legend-color black">&lt;/span> Poids (kg)
+      &lt;/span>
+      &lt;span className="legend-item">
+        &lt;span className="legend-color red">&lt;/span> Calories brûlées (kCal)
+      &lt;/span>
+    &lt;/div>
+  );
+}
+
+/**
+ * Composant affichant un graphique en barres représentant l'activité quotidienne.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.activityData - Les données d'activité à afficher dans le graphique.
+ * @param {boolean} props.error - Indique si une erreur est survenue lors du chargement des données.
+ * @returns {JSX.Element} - Un élément JSX contenant le graphique ou un message d'erreur si les données sont introuvables.
+ */
+function ActivityChart({ activityData}) {
+  
+  if (!activityData) return &lt;p>Chargement...&lt;/p>;
+
+  const formattedData = activityData.map((session, index) => ({
+    ...session,
+    day: index + 1, 
+  }));
+
+  const minValue = Math.min(...activityData.map((d) => d.kilogram));
+  const maxValue = Math.max(...activityData.map((d) => d.kilogram));
+  const avgValue = Math.round(activityData.reduce((sum, d) => sum + d.kilogram, 0) / activityData.length);
+
+  const lowerBound = minValue - 2; 
+  const upperBound = maxValue + 2; 
+
+  return (
+    &lt;div className="activity-chart">
+      &lt;h3>Activité quotidienne&lt;/h3>
+      &lt;ResponsiveContainer width="100%" height={300}>
+        &lt;BarChart data={formattedData} barGap={8} barCategoryGap={25}>
+          &lt;CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E0E0E0" />
+          &lt;XAxis dataKey="day" tick={{ fill: "gray" }} tickLine={false} />
+          {&lt;YAxis 
+            yAxisId="right" 
+            orientation="right" 
+            dataKey="kilogram" 
+            domain={[lowerBound, upperBound]} 
+            ticks={[lowerBound, avgValue, upperBound]} 
+            axisLine={false} 
+            tickLine={false} 
+            tick={{ fill: "gray" }}
+          />}
+          &lt;YAxis yAxisId="left" orientation="left" dataKey="calories" hide={true} />
+          &lt;Tooltip content={&lt;CustomTooltip />} />
+          &lt;Legend content={&lt;CustomLegend />} verticalAlign="top" align="right" wrapperStyle={{ marginBottom: 20 }} />
+          &lt;Bar yAxisId="right" dataKey="kilogram" fill="#282D30" radius={[3, 3, 0, 0]} barSize={7} />
+          &lt;Bar yAxisId="left" dataKey="calories" fill="#FF0101" radius={[3, 3, 0, 0]} barSize={7} />
+          &lt;CartesianGrid strokeDasharray="3 3" stroke="#C0C0C0" horizontal={true} />
+        &lt;/BarChart>
+      &lt;/ResponsiveContainer>
+    &lt;/div>
+  );
+}
+
+// Définition des types des propriétés du composant `ActivityChart`
+ActivityChart.propTypes = {
+  activityData: PropTypes.array.isRequired,
+  error: PropTypes.bool,
+};
+
+export default ActivityChart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AverageSessionsChart">AverageSessionsChart</a></li><li><a href="global.html#CustomCursor">CustomCursor</a></li><li><a href="global.html#CustomLegend">CustomLegend</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li><li><a href="global.html#HelloBanner">HelloBanner</a></li><li><a href="global.html#KeyDataCard">KeyDataCard</a></li><li><a href="global.html#KeyDataSection">KeyDataSection</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#fetchData">fetchData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Apr 03 2025 18:00:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

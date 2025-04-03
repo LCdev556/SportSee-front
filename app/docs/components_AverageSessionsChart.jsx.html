@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/AverageSessionsChart.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/AverageSessionsChart.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import PropTypes from "prop-types";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Rectangle,
+} from "recharts";
+import "../style/AverageSessionsChart.scss"; 
+
+const daysMapping = ["L", "M", "M", "J", "V", "S", "D"];
+
+/**
+ * Composant personnalisé pour afficher des informations dans le tooltip.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {boolean} props.active - Indique si le tooltip est actif ou non.
+ * @param {Array} props.payload - Les données à afficher dans le tooltip.
+ * @returns {JSX.Element|null} - Retourne un JSX contenant les informations à afficher dans le tooltip ou `null` si aucune donnée à afficher.
+ */
+const CustomTooltip = ({ active, payload }) => {
+  if (active &amp;&amp; payload &amp;&amp; payload.length) {
+    return (
+      &lt;div className="custom-tooltip">
+        &lt;p>{`${payload[0].value} min`}&lt;/p>
+      &lt;/div>
+    );
+  }
+  return null;
+};
+
+/**
+ * Composant personnalisé pour afficher un curseur (rectangle) dans le graphique.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.points - Les points à utiliser pour positionner le rectangle.
+ * @returns {JSX.Element} - Un élément JSX représentant le curseur (rectangle) sur le graphique.
+ */
+const CustomCursor = ({ points }) => {
+  return (
+    &lt;Rectangle
+      fill="rgba(0, 0, 0, 0.2)"
+      x={points[1].x}
+      width={500}
+      height={300}
+    />
+  );
+};
+
+/**
+ * Composant affichant un graphique en ligne représentant la durée moyenne des sessions.
+ *
+ * @param {Object} props - Les propriétés du composant.
+ * @param {Array} props.sessions - Les données des sessions à afficher dans le graphique.
+ * @param {boolean} props.error - Indique si une erreur est survenue lors du chargement des données.
+ * @returns {JSX.Element} - Un élément JSX contenant le graphique ou un message d'erreur si les données sont introuvables.
+ */
+function AverageSessionsChart({ sessions}) {
+  
+  return (
+    &lt;div className="average-sessions-chart">
+      &lt;h3 className="chart-title">Durée moyenne des sessions&lt;/h3>
+      &lt;ResponsiveContainer width="100%" height={200}>
+        &lt;LineChart data={sessions} margin={{ top: 50, right: 10, left: 10, bottom: 10 }}>
+          &lt;XAxis
+            dataKey="day"
+            tickFormatter={(day) => daysMapping[day - 1]}
+            tick={{ fill: "white", fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+          />
+          &lt;YAxis hide domain={["dataMin - 10", "dataMax + 10"]} />
+          &lt;Tooltip content={&lt;CustomTooltip />} cursor={&lt;CustomCursor />} />
+          &lt;Line
+            type="monotone"
+            dataKey="sessionLength"
+            stroke="white"
+            strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 5, fill: "white", stroke: "rgba(255, 255, 255, 0.5)", strokeWidth: 3 }}
+          />
+        &lt;/LineChart>
+      &lt;/ResponsiveContainer>
+    &lt;/div>
+  );
+}
+
+// Définition des types des propriétés du composant `AverageSessionsChart`
+AverageSessionsChart.propTypes = {
+  sessions: PropTypes.arrayOf(
+    PropTypes.shape({
+      day: PropTypes.number.isRequired,
+      sessionLength: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  error: PropTypes.bool,
+};
+
+export default AverageSessionsChart;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ActivityChart">ActivityChart</a></li><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AverageSessionsChart">AverageSessionsChart</a></li><li><a href="global.html#CustomCursor">CustomCursor</a></li><li><a href="global.html#CustomLegend">CustomLegend</a></li><li><a href="global.html#CustomTooltip">CustomTooltip</a></li><li><a href="global.html#HelloBanner">HelloBanner</a></li><li><a href="global.html#KeyDataCard">KeyDataCard</a></li><li><a href="global.html#KeyDataSection">KeyDataSection</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#PerformanceChart">PerformanceChart</a></li><li><a href="global.html#ScoreChart">ScoreChart</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#fetchData">fetchData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Apr 03 2025 18:00:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
